@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="historicalPlacesApp">
+<head>
+    <title>Historical Places SPA</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div ng-controller="HistoricalPlacesController as vm">
+        <h1>Historical Places</h1>
+        <ul>
+            <li ng-repeat="place in vm.places">
+                <a ng-click="vm.showDetails(place)">{{ place.name }}</a>
+            </li>
+        </ul>
+        <div ng-show="vm.selectedPlace">
+            <h2>{{ vm.selectedPlace.name }}</h2>
+            <p>{{ vm.selectedPlace.description }}</p>
+        </div>
+    </div>
+</body>
+</html>

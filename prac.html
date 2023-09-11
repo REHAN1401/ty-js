@@ -1,0 +1,51 @@
+<html ng-app="bookingApp">
+
+<head>
+    <title>Booking App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"> </script>
+    <script>var app = angular.module('bookingApp', []);
+        app.controller('BookingController', function ($scope) {
+            $scope.customer = {
+                name: '',
+                bookingDate: '',
+                journeyDate: '',
+                noOfPassengers: 1,
+                passengerNames: ''
+            };
+
+            $scope.showTicket=false;
+            $scope.generateTicket=function(){
+                $scope.showTicket=true;
+            }
+        });
+
+    </script>
+</head>
+
+<body ng-controller="BookingController">
+    <div ng-if="!showTicket">
+        <h2>customer information</h2>
+        <label>Name:</label>
+        <input type="text" ng-model="customer.name"><br>
+        <label>Date of Booking:</label>
+        <input type="date" ng-model="customer.bookingDate"><br>
+        <label>Date of Journey:</label>
+        <input type="date" ng-model="customer.journeyDate"><br>
+        <label>No of Passengers:</label>
+        <input type="number" ng-model="customer.noOfPassengers"><br>
+        <label>Name of Passenger(s):</label>
+        <input type="text" ng-model="customer.passengerNames"><br>
+        <button ng-click="generateTicket()">generateTicket</button>
+    </div>
+
+    <div ng-if="showTicket">
+        <h3>E-Ticket</h3>
+        <p><strong>name:</strong>{{customer.name}}</p>
+        <p><strong>Date of Booking:</strong> {{ customer.bookingDate | date }}</p>
+        <p><strong>Date of Journey:</strong> {{ customer.journeyDate | date }}</p>
+        <p><strong>No of Passengers:</strong> {{ customer.noOfPassengers }}</p>
+        <p><strong>Name of Passenger(s):</strong> {{ customer.passengerNames }}</p>
+    </div>
+</body>
+
+</html>

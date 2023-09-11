@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="employeeApp">
+<head>
+    <title>Employee Registration and Calculator</title>
+</head>
+<body ng-controller="EmployeeController">
+    <h1>Employee Registration Form</h1>
+    <form name="registrationForm" novalidate>
+        <label>Full Name:</label>
+        <input type="text" ng-model="employee.fullName" name="fullName" required>
+
+        <label>Date of Birth:</label>
+        <input type="date" ng-model="employee.dob" name="dob" required max="{{ maxDOB | date:'yyyy-MM-dd' }}">
+
+        <div ng-show="registrationForm.dob.$error.max">
+            <p>Date of Birth must be before or on {{ maxDOB | date:'yyyy-MM-dd' }}</p>
+        </div>
+
+        <label>Joining Date:</label>
+        <input type="date" ng-model="employee.joiningDate" name="joiningDate" required max="{{ maxJoiningDate | date:'yyyy-MM-dd' }}">
+
+        <div ng-show="registrationForm.joiningDate.$error.max">
+            <p>Joining Date must be before or on {{ maxJoiningDate | date:'yyyy-MM-dd' }}</p>
+        </div>
+
+        <label>Salary:</label>
+        <input type="number" ng-model="employee.salary" name="salary" required min="1" max="1000000">
+
+        <div ng-show="registrationForm.salary.$error.min || registrationForm.salary.$error.max">
+            <p>Salary must be between 1 and 1,000,000</p>
+        </div>
+
+        <button ng-click="submitForm()" ng-disabled="registrationForm.$invalid">Register</button>
+    </form>
+    
+    <hr>
+    
+    <div>
+        <h2>Calculator</h2>
+        <label>Number 1:</label>
+        <input type="number" ng-model="num1">
+
+        <label>Number 2:</label>
+        <input type="number" ng-model="num2">
+
+        <label>Operation:</label>
+        <input type="radio" ng-model="operation" value="add">ADD
+        <input type="radio" ng-model="operation" value="subtract">Subtract
+        <input type="radio" ng-model="operation" value="multiply">Multiply
+        <input type="radio" ng-model="operation" value="divide">Divide
+
+        <button ng-click="calculate()">Calculate</button>
+        <p ng-switch="operation">
+            <span ng-switch-when="add">Result: {{ result }}</span>
+            <span ng-switch-when="subtract">Result: {{ result }}</span>
+            <span ng-switch-when="multiply">Result: {{ result }}</span>
+            <span ng-switch-when="divide">Result: {{ result }}</span>
+            <span ng-switch-default>Select an operation</span>
+        </p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('employeeApp', [])
+        .controller('EmployeeController', function($scope) {
+            $scope.employee = {};
+            $scope.maxDOB = new Date();
+            $scope.maxJoiningDate = new Date();
+            $scope.result = null;
+
+            $scope.submitForm = function() {
+                alert("Employee Registration successfully");
+            };
+
+            $scope.calculate = function() {
+                switch ($scope.operation) {
+                    case "add":
+                        $scope.result = $scope.num1 + $scope.num2;
+                        break;
+                    case "subtract":
+                        $scope.result = $scope.num1 - $scope.num2;
+                        break;
+                    case "multiply":
+                        $scope.result = $scope.num1 * $scope.num2;
+                        break;
+                    case "divide":
+                        $scope.result = $scope.num1 / $scope.num2;
+                        break;
+                    default:
+                        $scope.result = null;
+                        break;
+                }
+            };
+        });
+    </script>
+</body>    
+</html>
